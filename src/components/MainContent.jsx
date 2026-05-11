@@ -1,4 +1,4 @@
-import React, { useContext } from "react"
+import React, { useContext, useState } from "react"
 import {
   FaCode,
   FaCompass,
@@ -6,13 +6,19 @@ import {
   FaMicrophone,
   FaUserCircle,
 } from "react-icons/fa"
+
+import { IoMenu } from "react-icons/io5"
+import { FaPlus } from "react-icons/fa"
+
 import { FaMessage } from "react-icons/fa6"
 import { MdAddPhotoAlternate } from "react-icons/md"
 import { IoMdSend } from "react-icons/io"
 import { Context } from "../context/Context"
 import geminiLogo from "../assets/geminiLogo.png"
 
-const MainContent = () => {
+
+const MainContent = ({ open, setOpen }) => {
+
   const {
     input,
     setInput,
@@ -26,11 +32,22 @@ const MainContent = () => {
     onSent,
   } = useContext(Context)
 
+
   return (
     <div className="flex-1 min-h-screen pb-[15vh] relative">
+
       <div className="flex items-center justify-between text-xl p-5 text-slate-700">
-        <p>Gemini</p>
+
+        <div className="flex items-center gap-5">
+          <IoMenu
+            onClick={() => setOpen(!open)}
+            className="text-black text-2xl block cursor-pointer md:hidden"
+          />
+          <h1 className="font-bold">MyAi</h1>
+        </div>
+
         <FaUserCircle />
+
       </div>
 
       <div className="max-w-[900px] mx-auto">
@@ -39,7 +56,7 @@ const MainContent = () => {
             <div className="my-12 text-[56px] text-slate-500 font-semibold p-5">
               <p>
                 <span className="bg-gradient-to-r from-[#368ddd] to-[#ff5546] bg-clip-text text-transparent">
-                  Hello, Arya.
+                  Hello, Anas.
                 </span>
               </p>
 
@@ -132,12 +149,12 @@ const MainContent = () => {
           </div>
 
           <p className="text-sm my-4 mx-auto text-center font-[500] text-slate-600">
-            Gemini may display inaccurate info, including about people, so
+            MyAi may display inaccurate info, including about people, so
             double-check its responses.
           </p>
         </div>
       </div>
-    </div>
+    </div >
   )
 }
 
