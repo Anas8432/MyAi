@@ -20,7 +20,7 @@ const Sidebar = ({ open, setOpen }) => {
       onClick={()=> setOpen(false)}
       />
     )}
-    <div className={`fixed top-0 left-0 z-50 text-white min-h-screen inline-flex flex-col justify-between bg-[#000000] py-[25px] px-[15px] transform transition-transform duration-300 w-64
+    <div className={`fixed top-0 left-0 z-50 text-white min-h-screen inline-flex flex-col justify-between bg-[#000000] py-[25px] px-[15px] transform transition-transform duration-300 w-64 shadow shadow-slate-700
      ${open ? "translate-x-0" : "-translate-x-full"}
      md:translate-x-0
      md:static

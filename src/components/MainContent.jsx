@@ -34,14 +34,14 @@ const MainContent = ({ open, setOpen }) => {
 
 
   return (
-    <div className="flex-1 min-h-screen pb-[15vh] relative">
+    <div className="flex-1 w-full pb-[15vh] relative bg-black">
 
-      <div className="flex items-center justify-between text-xl p-5 text-slate-700">
+      <div className="flex fixed w-full top-0 left-0 z-40 md:sticky items-center justify-between text-xl p-5 text-white bg-slate-900">
 
         <div className="flex items-center gap-5">
           <IoMenu
             onClick={() => setOpen(!open)}
-            className="text-black text-2xl block cursor-pointer md:hidden"
+            className="text-2xl block cursor-pointer md:hidden"
           />
           <h1 className="font-bold">MyAi</h1>
         </div>
@@ -50,10 +50,10 @@ const MainContent = ({ open, setOpen }) => {
 
       </div>
 
-      <div className="max-w-[900px] mx-auto">
+      <div className="max-w-[900px] mx-auto mb-10">
         {!showResult ? (
           <>
-            <div className="my-12 text-[56px] text-slate-500 font-semibold p-5">
+            <div className="my-12 text-[8vw] md:text-[3rem] text-slate-500 font-semibold p-5 mt-40 mb-32 md:mt-28 md:mb-10">
               <p>
                 <span className="bg-gradient-to-r from-[#368ddd] to-[#ff5546] bg-clip-text text-transparent">
                   Hello, Anas.
@@ -64,32 +64,32 @@ const MainContent = ({ open, setOpen }) => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-5">
-              <div className="h-[200px] p-4 bg-gray-200 rounded-lg relative cursor-pointer hover:bg-gray-300">
-                <p className="text-slate-700 text-lg">
+              <div className="h-[100px] md:h-[200px] p-4 bg-slate-900 rounded-lg relative cursor-pointer hover:bg-slate-800 text-slate-300">
+                <p className="text-lg">
                   Suggeset top 10 webseries.
                 </p>
 
-                <FaCompass className="text-4xl p-1 absolute bottom-2 right-2" />
+                <FaCompass className="text-4xl p-1 absolute bottom-2 right-2 " />
               </div>
 
-              <div className="h-[200px] p-4 bg-gray-200 rounded-lg relative cursor-pointer hover:bg-gray-300">
-                <p className="text-slate-700 text-lg">
+              <div className="h-[100px] md:h-[200px] p-4 bg-slate-900 rounded-lg relative cursor-pointer hover:bg-slate-800 text-slate-300">
+                <p className="text-lg">
                   What is loop in Javascript?
                 </p>
 
                 <FaLightbulb className="text-4xl p-1 absolute bottom-2 right-2" />
               </div>
 
-              <div className="h-[200px] p-4 bg-gray-200 rounded-lg relative cursor-pointer hover:bg-gray-300">
-                <p className="text-slate-700 text-lg">
+              <div className="h-[100px] md:h-[200px] p-4 bg-slate-900 rounded-lg relative cursor-pointer hover:bg-slate-800 text-slate-300">
+                <p className="text-lg">
                   Who is known as the "Mother of Dragons"?
                 </p>
 
                 <FaMessage className="text-4xl p-1 absolute bottom-2 right-2" />
               </div>
 
-              <div className="h-[200px] p-4 bg-gray-200 rounded-lg relative cursor-pointer hover:bg-gray-300">
-                <p className="text-slate-700 text-lg">
+              <div className="h-[100px] md:h-[200px] p-4 bg-slate-900 rounded-lg relative cursor-pointer hover:bg-slate-800 text-slate-300">
+                <p className="text-lg">
                   Who sits on the Iron Throne at the end of the series?
                 </p>
 
@@ -126,8 +126,8 @@ const MainContent = ({ open, setOpen }) => {
           </div>
         )}
 
-        <div className="absolute bottom-0 w-full max-w-[900px] px-5 mx-auto mt-5">
-          <div className="flex items-center justify-between gap-20 bg-gray-200 py-2 px-5 rounded-full">
+        <div className="fixed bg-black shadow-sm bottom-0 w-full max-w-[900px] px-5 mx-auto mt-5">
+          <div className="flex items-center justify-between bg-slate-900 text-slate-100 py-2 px-5 rounded-full mt-3">
             <input
               type="text"
               placeholder="Enter a prompt here..."
@@ -148,7 +148,7 @@ const MainContent = ({ open, setOpen }) => {
             </div>
           </div>
 
-          <p className="text-sm my-4 mx-auto text-center font-[500] text-slate-600">
+          <p className="text-sm my-4 mx-auto text-center font-[500] text-slate-500">
             MyAi may display inaccurate info, including about people, so
             double-check its responses.
           </p>

@@ -21,3 +21,8 @@
 .scrollbar-hidden {
   overflow: auto; /* Make sure overflow is set to auto or scroll */
 }
+
+
+body {
+  background-color: black;
+}
