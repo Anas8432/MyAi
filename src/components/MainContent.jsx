@@ -32,9 +32,13 @@ const MainContent = ({ open, setOpen }) => {
     onSent,
   } = useContext(Context)
 
+  const clearInput = () => {
+    setInput("")
+  }
+
 
   return (
-    <div className="flex-1 w-full pb-[15vh] relative bg-black">
+    <div className="flex-1 w-full relative bg-black">
 
       <div className="flex fixed w-full top-0 left-0 z-40 md:sticky items-center justify-between text-xl p-5 text-white bg-slate-900">
 
@@ -50,7 +54,7 @@ const MainContent = ({ open, setOpen }) => {
 
       </div>
 
-      <div className="max-w-[900px] mx-auto mb-10">
+      <div className="max-w-[900px] mx-auto mb-36">
         {!showResult ? (
           <>
             <div className="my-12 text-[8vw] md:text-[3rem] text-slate-500 font-semibold p-5 mt-40 mb-32 md:mt-28 md:mb-10">
@@ -126,14 +130,20 @@ const MainContent = ({ open, setOpen }) => {
           </div>
         )}
 
-        <div className="fixed bg-black shadow-sm bottom-0 w-full max-w-[900px] px-5 mx-auto mt-5">
-          <div className="flex items-center justify-between bg-slate-900 text-slate-100 py-2 px-5 rounded-full mt-3">
+        <div className="fixed bg-black shadow-sm bottom-0 w-[-webkit-fill-available] max-w-[900px] px-5 mx-auto pt-3 pb-1">
+          <div className="flex items-center w-full justify-between bg-slate-900 text-slate-100 py-2 px-5 rounded-full">
             <input
               type="text"
               placeholder="Enter a prompt here..."
-              className="flex-1 bg-transparent border-none outline-none p-2 text-lg"
+              className="flex-1 bg-transparent border-none outline-none p-2 text-lg w-[50%]"
               value={input}
               onChange={(e) => setInput(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === "Enter") {
+                  onSent();
+                  clearInput();
+                }
+              }}
             />
 
             <div className="flex gap-4 items-center">
@@ -141,8 +151,11 @@ const MainContent = ({ open, setOpen }) => {
               <FaMicrophone className="text-2xl cursor-pointer" />
               {input && (
                 <IoMdSend
-                  onClick={() => onSent()}
-                  className="text-2xl cursor-pointer"
+                  onClick={() => {
+                      onSent();
+                      clearInput();
+              }}
+              className="text-2xl cursor-pointer"
                 />
               )}
             </div>
