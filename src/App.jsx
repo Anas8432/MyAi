@@ -1,7 +1,6 @@
-import React from "react"
+import React, { useState } from "react"
 import Sidebar from "./components/Sidebar"
 import MainContent from "./components/MainContent"
-import { useState } from "react"
 
 const App = () => {
 

@@ -7,6 +7,8 @@ import {
   FaUserCircle,
 } from "react-icons/fa"
 
+import ReactMarkdown from "react-markdown"
+
 import { IoMenu } from "react-icons/io5"
 import { FaPlus } from "react-icons/fa"
 
@@ -18,6 +20,27 @@ import geminiLogo from "../assets/geminiLogo.png"
 
 
 const MainContent = ({ open, setOpen }) => {
+
+
+  const cards = [
+    {
+      text: "Suggest top 10 webseries.",
+      icon: <FaCompass className="text-4xl p-1 absolute bottom-2 right-2" />,
+    },
+    {
+      text: "What is loop in Javascript?",
+      icon: <FaLightbulb className="text-4xl p-1 absolute bottom-2 right-2" />,
+    },
+    {
+      text: 'Who is known as the "Mother of Dragons"?',
+      icon: <FaMessage className="text-4xl p-1 absolute bottom-2 right-2" />,
+    },
+    {
+      text: "Who sits on the Iron Throne at the end of the series?",
+      icon: <FaCode className="text-4xl p-1 absolute bottom-2 right-2" />,
+    },
+  ]
+
 
   const {
     input,
@@ -68,64 +91,78 @@ const MainContent = ({ open, setOpen }) => {
             </div>
 
             <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-5">
-              <div className="h-[100px] md:h-[200px] p-4 bg-slate-900 rounded-lg relative cursor-pointer hover:bg-slate-800 text-slate-300">
-                <p className="text-lg">
-                  Suggeset top 10 webseries.
-                </p>
-
-                <FaCompass className="text-4xl p-1 absolute bottom-2 right-2 " />
-              </div>
-
-              <div className="h-[100px] md:h-[200px] p-4 bg-slate-900 rounded-lg relative cursor-pointer hover:bg-slate-800 text-slate-300">
-                <p className="text-lg">
-                  What is loop in Javascript?
-                </p>
-
-                <FaLightbulb className="text-4xl p-1 absolute bottom-2 right-2" />
-              </div>
-
-              <div className="h-[100px] md:h-[200px] p-4 bg-slate-900 rounded-lg relative cursor-pointer hover:bg-slate-800 text-slate-300">
-                <p className="text-lg">
-                  Who is known as the "Mother of Dragons"?
-                </p>
-
-                <FaMessage className="text-4xl p-1 absolute bottom-2 right-2" />
-              </div>
-
-              <div className="h-[100px] md:h-[200px] p-4 bg-slate-900 rounded-lg relative cursor-pointer hover:bg-slate-800 text-slate-300">
-                <p className="text-lg">
-                  Who sits on the Iron Throne at the end of the series?
-                </p>
-
-                <FaCode className="text-4xl p-1 absolute bottom-2 right-2" />
-              </div>
+              {cards.map((card, index) => (
+                <div
+                  key={index}
+                  className="h-[100px] md:h-[200px] p-4 bg-slate-900 rounded-lg relative cursor-pointer hover:bg-slate-800 text-slate-300 transition"
+                >
+                  <p className="text-lg">{card.text}</p>
+                  {card.icon}
+                </div>
+              ))}
             </div>
           </>
         ) : (
-          <div className="py-0 px-[5%] max-h-[70vh] overflow-y-scroll scrollbar-hidden">
-            <div className="my-10 mx-0 flex items-center gap-5">
-              <FaUserCircle className="text-3xl" />
+          <div className="py-0 px-[5%] max-h-[calc(100vh-220px)] overflow-y-scroll scrollbar-hidden">
+            <div className="flex flex-col gap-10 text-white">
 
-              <p className="text-lg font-[400] leading-[1.8]">{recentPrompt}</p>
-            </div>
+              {resultData.map((item, index) => (
 
-            <div className="flex items-start gap-5">
-              <img src={geminiLogo} alt="" className="w-8 rounded-[50%]" />
+                <div key={index} className="flex flex-col gap-5">
 
-              {loading ? (
-                <div className="w-full flex flex-col gap-2">
-                  <hr className="rounded-md border-none bg-gray-200 bg-gradient-to-r from-[#81cafe] via-[#ffffff] to-[#81cafe] p-4 animate-scroll-bg" />
+                  {/* User Prompt */}
+                  <div className="flex items-center gap-4">
+                    <FaUserCircle className="text-3xl" />
 
-                  <hr className="rounded-md border-none bg-gray-200 bg-gradient-to-r from-[#81cafe] via-[#ffffff] to-[#81cafe] p-4 animate-scroll-bg" />
+                    <p className="text-lg leading-[1.8] font-medium">
+                      {item.prompt}
+                    </p>
+                  </div>
 
-                  <hr className="rounded-md border-none bg-gray-200 bg-gradient-to-r from-[#81cafe] via-[#ffffff] to-[#81cafe] p-4 animate-scroll-bg" />
+                  {/* AI Response */}
+                  <div className="flex items-start gap-4">
+
+                    <img
+                      src={geminiLogo}
+                      alt="MyAi Logo"
+                      className="w-8 rounded-full"
+                    />
+
+                    <div className="text-lg leading-[1.8]">
+
+                      <ReactMarkdown>
+                        {item.response}
+                      </ReactMarkdown>
+
+                    </div>
+
+                  </div>
+
                 </div>
-              ) : (
-                <p
-                  dangerouslySetInnerHTML={{ __html: resultData }}
-                  className="text-lg font-[400] leading-[1.8]"
-                ></p>
+              ))}
+
+              {/* Loading Animation */}
+              {loading && (
+                <div className="flex items-start gap-4">
+
+                  <img
+                    src={geminiLogo}
+                    alt="MyAi Logo"
+                    className="w-8 rounded-full"
+                  />
+
+                  <div className="w-full flex flex-col gap-2">
+                    {[1, 2, 3].map((item) => (
+                      <hr
+                        key={item}
+                        className="rounded-md border-none bg-gradient-to-r from-[#81cafe] via-[#ffffff] to-[#81cafe] p-4 animate-scroll-bg"
+                      />
+                    ))}
+                  </div>
+
+                </div>
               )}
+
             </div>
           </div>
         )}
@@ -139,7 +176,7 @@ const MainContent = ({ open, setOpen }) => {
               value={input}
               onChange={(e) => setInput(e.target.value)}
               onKeyDown={(e) => {
-                if (e.key === "Enter") {
+                if (window.innerWidth > 768 && e.key === "Enter" && input.trim()) {
                   onSent();
                   clearInput();
                 }
@@ -149,13 +186,13 @@ const MainContent = ({ open, setOpen }) => {
             <div className="flex gap-4 items-center">
               <MdAddPhotoAlternate className="text-2xl cursor-pointer" />
               <FaMicrophone className="text-2xl cursor-pointer" />
-              {input && (
+              {input.trim() && (
                 <IoMdSend
                   onClick={() => {
-                      onSent();
-                      clearInput();
-              }}
-              className="text-2xl cursor-pointer"
+                    onSent()
+                    clearInput()
+                  }}
+                  className="text-2xl cursor-pointer hover:text-blue-400 transition"
                 />
               )}
             </div>

@@ -8,31 +8,57 @@ const Sidebar = ({ open, setOpen }) => {
   const { onSent, prevPrompt, setRecentPrompt, newChat } = useContext(Context)
 
   const loadPrompt = async (prompt) => {
-    setRecentPrompt(prompt)
+    if (!prompt) return
 
+    setRecentPrompt(prompt)
     await onSent(prompt)
+
+    if (window.innerWidth < 768) {
+      setOpen(false)
+    }
   }
+
+
+
+  const sidebarLinks = [
+    {
+      icon: <FaQuestion className="text-2xl" />,
+      label: "Help",
+    },
+    {
+      icon: <MdHistory className="text-2xl" />,
+      label: "Activity",
+    },
+    {
+      icon: <IoSettings className="text-2xl" />,
+      label: "Settings",
+    },
+  ]
+
 
   return (
     <>
       {open && (
-        <div className="fixed inset-0 bg-black/50 z-40 md:hidden"
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
           onClick={() => setOpen(false)}
         />
       )}
-      <div className={`fixed md:sticky top-0 left-0 z-50 text-white inline-flex flex-col justify-between bg-[#000000] py-[25px] px-[15px] transform transition-transform duration-300 w-64 shadow shadow-slate-700 h-[100vh]
+      <div className={`fixed md:sticky top-0 left-0 z-50 text-white inline-flex flex-col justify-between bg-[#000000] py-[25px] px-[15px] transform transition-all duration-300 ease-in-out w-64 shadow shadow-slate-700 h-[100vh]
      ${open ? "translate-x-0" : "-translate-x-full"}
      md:translate-x-0
      md:static
      `}>
         <div>
           <div className="md:hidden flex justify-end mt-[-3px]">
-            <IoClose onClick={() => setOpen(!open)} className="text-2xl" />
+            <IoClose
+              onClick={() => setOpen(false)}
+              className="text-2xl cursor-pointer"
+            />
           </div>
 
           <div
             onClick={() => newChat()}
-            className="mt-[10px] inline-flex items-center gap-[10px] py-[10px] px-[15px] text-[14px] text-gray-500 cursor-pointer bg-gray-50 rounded-full"
+            className="mt-3 inline-flex items-center gap-3 py-3 px-4 text-sm text-white cursor-pointer bg-slate-800 hover:bg-slate-700 transition rounded-full"
           >
             <FaPlus className="text-2xl" />
 
@@ -42,15 +68,18 @@ const Sidebar = ({ open, setOpen }) => {
           {(
             <div className="flex flex-col animate-fadeIn duration-1000">
               <p className="mt-7 mb-5">Recent</p>
-              <div className="h-[60vh] overflow-y-auto">
+              <div className="h-[40vh] overflow-y-auto scrollbar-hidden pr-1">
                 {prevPrompt?.map((item, index) => {
                   return (
                     <div
                       onClick={() => loadPrompt(item)}
-                      className="flex items-center gap-2 p-2 pr-10 rounded-[50px] text-slate-700 cursor-pointer hover:bg-gray-300"
+                      key={index}
+                      className="flex items-center gap-3 p-3 rounded-full text-slate-200 cursor-pointer hover:bg-slate-800 transition"
                     >
                       <FaMessage className="text-2xl" />
-                      <p>{item.slice(0, 18)}...</p>
+                      <p>
+                        {item.length > 18 ? `${item.slice(0, 18)}...` : item}
+                      </p>
                     </div>
                   )
                 })}
@@ -59,21 +88,16 @@ const Sidebar = ({ open, setOpen }) => {
           )}
         </div>
 
-        <div className="flex flex-col">
-          <div className="flex items-center gap-2 p-2 pr-10 rounded-[50px] text-slate-50 cursor-pointer hover:bg-gray-600">
-            <FaQuestion className="text-2xl" />
-            <p>Help</p>
-          </div>
-
-          <div className="flex items-center gap-2 p-2 pr-10 rounded-[50px] text-slate-50 cursor-pointer hover:bg-gray-600">
-            <MdHistory className="text-2xl" />
-            <p>Activity</p>
-          </div>
-
-          <div className="flex items-center gap-2 p-2 pr-10 rounded-[50px] text-slate-50 cursor-pointer hover:bg-gray-600">
-            <IoSettings className="text-2xl" />
-            <p>Settings</p>
-          </div>
+        <div className="flex flex-col gap-2">
+          {sidebarLinks.map((item, index) => (
+            <div
+              key={index}
+              className="flex items-center gap-3 p-3 rounded-full text-slate-100 cursor-pointer hover:bg-slate-800 transition"
+            >
+              {item.icon}
+              <p>{item.label}</p>
+            </div>
+          ))}
         </div>
       </div>
     </>

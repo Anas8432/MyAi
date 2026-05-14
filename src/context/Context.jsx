@@ -9,13 +9,24 @@ const ContextProvider = (props) => {
   const [prevPrompt, setPrevPrompt] = useState([])
   const [showResult, setShowResult] = useState(false)
   const [loading, setLoading] = useState(false)
-  const [resultData, setResultData] = useState("")
+  const [resultData, setResultData] = useState([])
+
 
   const delayPara = (index, nextWord) => {
-    setTimeout(function () {
-      setResultData((prev) => prev + nextWord)
+    setTimeout(() => {
+      setResultData((prev) => {
+
+        const updated = [...prev]
+
+        const lastIndex = updated.length - 1
+
+        updated[lastIndex].response += nextWord + " "
+
+        return [...updated]
+      })
     }, 75 * index)
   }
+
 
   const newChat = () => {
     setLoading(false)
@@ -23,24 +34,40 @@ const ContextProvider = (props) => {
   }
 
   const onSent = async (prompt) => {
-    setResultData("")
+
+    if (!prompt && !input.trim()) return
+
+    setResultData((prev) => [
+      ...prev,
+      {
+        prompt: "",
+        response: "",
+      },
+    ])
     setLoading(true)
     setShowResult(true)
 
-    let response
 
-    if (prompt !== undefined) {
-      response = await run(prompt)
+    const finalPrompt = prompt ?? input
 
-      setRecentPrompt(prompt)
-    } else {
-      setPrevPrompt((prev) => [...prev, input])
-      setRecentPrompt(input)
+    setPrevPrompt((prev) => [...prev, finalPrompt])
 
-      response = await run(input)
-    }
+    setRecentPrompt(finalPrompt)
 
-    let responseArray = response.split("**")
+    setResultData((prev) => {
+
+      const updated = [...prev]
+
+      updated[updated.length - 1].prompt = finalPrompt
+
+      return updated
+    })
+
+    const response = await run(finalPrompt)
+
+
+
+    let responseArray = (response || "").split("**")
     let newResponse = ""
 
     for (let i = 0; i < responseArray.length; i++) {
@@ -61,9 +88,14 @@ const ContextProvider = (props) => {
       delayPara(i, nextWord + " ")
     }
 
+    const totalTime = newResponseArray.length * 75
+
+    await new Promise((res) => setTimeout(res, totalTime))
+
     setLoading(false)
     setInput("")
   }
+  
 
   const contextValue = {
     input,
