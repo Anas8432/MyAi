@@ -1,5 +1,38 @@
 import { createContext, useState } from "react"
-import run from "../config/gemini"
+// import run from "../config/gemini"
+
+
+const run = async (prompt) => {
+
+  try {
+
+    const response = await fetch("http://localhost:5000/api/chat", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ prompt }),
+    })
+
+    const data = await response.json()
+
+    if (!data.success) {
+      return "Something went wrong"
+    }
+
+    return data.response
+
+  } catch (error) {
+
+    console.log(error)
+
+    return "Server error"
+  }
+}
+
+
+
+
 
 export const Context = createContext()
 
@@ -115,5 +148,6 @@ const ContextProvider = (props) => {
     <Context.Provider value={contextValue}>{props.children}</Context.Provider>
   )
 }
+
 
 export default ContextProvider

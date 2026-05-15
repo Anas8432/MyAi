@@ -104,7 +104,7 @@ const MainContent = ({ open, setOpen }) => {
           </>
         ) : (
           <div className="py-0 px-[5%] max-h-[calc(100vh-220px)] overflow-y-scroll scrollbar-hidden">
-            <div className="flex flex-col gap-10 text-white">
+            <div className="flex flex-col gap-10 text-white mt-20 md:mt-10 mb-80">
 
               {resultData.map((item, index) => (
 
@@ -145,11 +145,11 @@ const MainContent = ({ open, setOpen }) => {
               {loading && (
                 <div className="flex items-start gap-4">
 
-                  <img
+                  {/* <img
                     src={geminiLogo}
                     alt="MyAi Logo"
                     className="w-8 rounded-full"
-                  />
+                  /> */}
 
                   <div className="w-full flex flex-col gap-2">
                     {[1, 2, 3].map((item) => (

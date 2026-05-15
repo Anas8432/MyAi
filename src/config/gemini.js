@@ -71,5 +71,3 @@ async function run(prompt) {
     return "Something went wrong. Please try again."
   }
 }
-
-export default run

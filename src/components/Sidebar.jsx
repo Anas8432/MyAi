@@ -68,7 +68,7 @@ const Sidebar = ({ open, setOpen }) => {
           {(
             <div className="flex flex-col animate-fadeIn duration-1000">
               <p className="mt-7 mb-5">Recent</p>
-              <div className="h-[40vh] overflow-y-auto scrollbar-hidden pr-1">
+              <div className="h-[40vh] overflow-y-scroll scrollbar-hidden pr-1">
                 {prevPrompt?.map((item, index) => {
                   return (
                     <div
@@ -88,7 +88,7 @@ const Sidebar = ({ open, setOpen }) => {
           )}
         </div>
 
-        <div className="flex flex-col gap-2">
+        <div className="flex flex-col gap-2 fixed bottom-0 mb-5">
           {sidebarLinks.map((item, index) => (
             <div
               key={index}
